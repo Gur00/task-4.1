@@ -1,0 +1,110 @@
+package com.example.mytimer;
+
+import android.os.Bundle;
+import android.os.SystemClock;
+import android.view.KeyEvent;
+import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.widget.Chronometer;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+    ImageButton start;
+    ImageButton pause;
+    ImageButton stop;
+    TextView text1;
+    TextView time;
+    TextView intext;
+    TextView lastwork;
+    private Chronometer meter;
+    private boolean running;
+    private long pauseoffset;
+    private long stopvalue;
+    TextView enterview;
+    EditText enterwork;
+
+
+    //@SuppressLint("WrongViewCast")
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+
+        meter = findViewById(R.id.chronometer);
+        start = findViewById(R.id.start);
+        pause = findViewById(R.id.pause);
+        stop = findViewById(R.id.stop);
+        text1 = findViewById(R.id.youview);
+        time = findViewById(R.id.time);
+        intext = findViewById(R.id.in);
+        lastwork = findViewById(R.id.Sit_unit);
+        enterview = findViewById(R.id.enterview);
+        enterwork = (EditText) findViewById(R.id.enterwork);
+
+    }
+
+    public void Startchronometer(View v)
+    {
+        if(!running)
+        {
+            meter.setBase(SystemClock.elapsedRealtime() - pauseoffset);
+            meter.start();
+            running = true;
+        }
+    }
+
+   public void Pausechronometer(View v)
+    {
+        if(running)
+        {
+            meter.stop();
+            pauseoffset = SystemClock.elapsedRealtime() - meter.getBase();
+            running = false;
+        }
+
+    }
+
+    public void stopchronometer(View v)
+    {
+        stopvalue = SystemClock.elapsedRealtime() - meter.getBase();
+        meter.stop();
+        meter.setBase(SystemClock.elapsedRealtime());
+        running = false;
+
+        enterwork.getText().toString();
+        enterwork.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if ((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) || (actionId == EditorInfo.IME_ACTION_DONE)) {
+                    int h   = (int)(stopvalue/3600000);
+                    int m = (int)(stopvalue - h*3600000)/60000;
+                    int s= (int)(stopvalue - h*3600000- m*60000)/1000 ;
+                    String hh = h < 10 ? "0"+h: h+"";
+                    String mm = m < 10 ? "0"+m: m+"";
+                    String ss = s < 10 ? "0"+s: s+"";
+                    time.setText(hh+":"+mm+":"+ss + " In ");
+
+
+
+                    lastwork.setText(enterwork.getText().toString());
+
+
+
+                }
+                return false;
+            }
+        });
+
+
+    }
+
+    @Override
+    public void onClick(View v) {
+
+    }
+}
