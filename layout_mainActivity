@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white"
+    tools:context=".MainActivity">
+
+
+    <TextView
+        android:id ="@+id/youview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/you_spend"
+        android:layout_marginTop="150dp"
+        android:layout_marginStart="60dp"
+        android:textSize="20sp"
+        android:textColor="@color/purple_200"
+         />
+
+    <TextView
+        android:id="@+id/time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="150dp"
+        android:layout_marginTop="-30dp"
+        android:layout_toEndOf="@id/youview"
+        android:minWidth="48dp"
+        android:layout_marginLeft="10dp"
+        android:text="@string/time"
+
+        android:textSize="20sp"
+         />
+
+
+
+    <TextView
+        android:id="@+id/Sit_unit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/sit_unit"
+        android:layout_marginStart="250dp"
+
+        android:textSize="20sp"
+        android:layout_marginTop="-10dp"
+
+        />
+    <Chronometer
+        android:id="@+id/chronometer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="32sp"
+        android:textColor="#4169E1"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp"
+        android:layout_gravity="center_horizontal"
+        />
+
+    <ImageButton
+        android:id="@id/start"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:src="@drawable/play"
+        android:scaleType="fitXY"
+        android:layout_marginTop="40dp"
+        android:layout_marginStart="80dp"
+        android:onClick="Startchronometer"
+        />
+
+    <ImageButton
+        android:id="@+id/pause"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:src="@drawable/pause"
+        android:scaleType="fitXY"
+        android:layout_marginTop="-55dp"
+        android:layout_marginLeft="170dp"
+        android:onClick="Pausechronometer"
+         />
+
+
+
+    <ImageButton
+        android:id="@+id/stop"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:src="@drawable/stop"
+        android:scaleType="fitXY"
+        android:layout_marginTop="-55dp"
+        android:layout_marginLeft="260dp"
+        android:onClick="stopchronometer"/>
+
+    <TextView
+        android:id="@+id/enterview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Enter your work type"
+        android:textSize="20sp"
+        android:layout_marginTop="30dp"
+        android:layout_gravity="center_horizontal"
+        />
+    <EditText
+        android:id="@+id/enterwork"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/enter_activity"
+        android:textSize="20sp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        />
+
+
+
+
+
+
+</androidx.appcompat.widget.LinearLayoutCompat>
