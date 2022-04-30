@@ -1,5 +1,9 @@
 package com.example.mytimer;
 
+
+
+import android.annotation.SuppressLint;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.view.KeyEvent;
@@ -27,6 +31,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     TextView enterview;
     EditText enterwork;
 
+    //defining shared preferences
+    SharedPreferences sharedPreferences;
+
+    String Activityname;
+    String lastime = "";
+
 
     //@SuppressLint("WrongViewCast")
     @Override
@@ -45,6 +55,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         lastwork = findViewById(R.id.Sit_unit);
         enterview = findViewById(R.id.enterview);
         enterwork = (EditText) findViewById(R.id.enterwork);
+        sharedPreferences = getSharedPreferences("package com.example.mytimer", MODE_PRIVATE);
+        checkSharedPreference();
 
     }
 
@@ -72,12 +84,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void stopchronometer(View v)
     {
         stopvalue = SystemClock.elapsedRealtime() - meter.getBase();
+
         meter.stop();
         meter.setBase(SystemClock.elapsedRealtime());
         running = false;
 
         enterwork.getText().toString();
         enterwork.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @SuppressLint("SetTextI18n")
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if ((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) || (actionId == EditorInfo.IME_ACTION_DONE)) {
@@ -92,6 +106,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
                     lastwork.setText(enterwork.getText().toString());
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString(Activityname, lastwork.getText().toString());
+                    editor.putLong(lastime, stopvalue);
+                    editor.apply();
 
 
 
@@ -100,6 +118,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
 
+
+
+    }
+    @SuppressLint("SetTextI18n")
+    public void checkSharedPreference()
+    {
+        String activityname = sharedPreferences.getString(Activityname, "");
+        long Lastime = sharedPreferences.getLong(lastime, 0);
+        lastwork.setText(activityname);
+
+        int h   = (int)(Lastime/3600000);
+        int m = (int)(Lastime - h*3600000)/60000;
+        int s= (int)(Lastime - h*3600000- m*60000)/1000 ;
+        String hh = h < 10 ? "0"+h: h+"";
+        String mm = m < 10 ? "0"+m: m+"";
+        String ss = s < 10 ? "0"+s: s+"";
+        time.setText(hh+":"+mm+":"+ss + " In ");
 
     }
 
